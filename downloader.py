@@ -13,15 +13,13 @@ def get_images(item_id, max_tries = 3, motion = 'stand1',
     base64_img_parts = []
     url = f'{URL_BASE}/{region}/{version}/item/{item_id}'
     while True:
-        res = requests.get(
-            f'{URL_BASE}/{region}/{version}/item/{item_id}'
-        )
+        res = requests.get(url)
         if res.status_code is 200:
             break
         elif tries < max_tries:
             tries += 1
         else:
-            raise Exception(f'download failed with status_code{res.status_code} from {url}')
+            raise Exception(f'download failed with status_code{res.status_code} from url')
     
     res_dct = res.json()
     # 1프레임의 이미지 부분들만 수집
@@ -32,5 +30,5 @@ def get_images(item_id, max_tries = 3, motion = 'stand1',
     return img_arrays
 
 def show_image(img):
-    img_to_show = img.fromarray(imgs, 'RGBA')
+    img_to_show = Image.fromarray(imgs, 'RGBA')
     img_to_show.show()
