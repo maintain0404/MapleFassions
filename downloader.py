@@ -29,6 +29,24 @@ def get_images(item_id, max_tries = 3, motion = 'stand1',
         img_arrays.append(np.asarray(Image.open(BytesIO(base64.b64decode(img_info['image'])))))
     return img_arrays
 
+def get_list(category, subCategory, is_cash = True, region = 'kms', version = '338', max_tries = 3):
+    url = f'{URL_BASE}/{region}/item/list'
+    querystring = {
+        'overallCategory' : 'Equip',
+        'category' : category,
+        'subcategory' : subCategory,
+        'cash' : is_cash
+        }
+    while True:
+        res = requests.get(url, params = querystring)
+        if res.status_code is 200:
+            break
+        elif tries < max_tries:
+            tries += 1
+        else:
+            raise Exception(f'download failed with status_code{res.status_code} from url')
+
+
 def show_image(img):
     img_to_show = Image.fromarray(imgs, 'RGBA')
     img_to_show.show()
