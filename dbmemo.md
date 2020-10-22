@@ -1,19 +1,37 @@
 ### item
-- id: id
-- name: 이름, varchar
-- category: 장비분류, int 
-- set: set 외래, varchar (외래 안쓰는게 나을듯)
+- id: id, int, primary key, not null
+- name: 이름, varchar, not null
+- category: 장비분류, 2byte int, not null
+- set: set 외래키
 - image: id기반으로 maplestory.io 이용
-- colortag: HSI 결과로 태깅한 것,
-- colordetail: HSI 추출값, 외부 링크 or 120*88 array
+- tags: 태그들, string[] 
+- HSI: 각 점의 H값 총 Counter, json
+- colordetail: HSI 추출값, 외부 링크 or array
+```sql
+create table item(
+id serial primary key not null,
+category smallint not null,
+set_included smallint, foreign key (set_included) references set(id) on delete set null on update cascade,
+tags varchar[],
+HSI json);
+```
 
-### HSI
-- H
-- S
-- I
-- A
+### set
+- ID: serial, not null, primary key
+- NAME: 세트이름, varchar, not null
+- TYPE: 세트분류, smallint
+- DESCRIPTION: 부가설명, varchar, 
+```sql
+create table set(
+id serial not null primary key,
+name varchar not null,
+type smallint,
+description varchar);
+```
 
-### 나중에 추가될 예정인 것
+
+
+### 나중에 추가될 예정
 - shape: 형태분류(페도라, 벙거지, 머리핀 등등)
 - stastics
 - user
