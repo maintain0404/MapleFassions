@@ -30,13 +30,16 @@ def get_images(item_id, max_tries = 3, motion = 'stand1',
     return img_arrays
 
 def get_list(category, subCategory, is_cash = True, region = 'kms', version = '338', max_tries = 3):
-    url = f'{URL_BASE}/{region}/item/list'
+    url = f'{URL_BASE}/{region}/{version}/item/list'
     querystring = {
-        'overallCategory' : 'Equip',
-        'category' : category,
-        'subcategory' : subCategory,
+        'overallCategoryFilter' : 'Equip',
+        'categoryFilter' : category,
+        'subCategoryFilter' : subCategory,
         'cash' : is_cash
         }
+
+    res = {}
+    tries = 0
     while True:
         res = requests.get(url, params = querystring)
         if res.status_code is 200:
@@ -45,7 +48,9 @@ def get_list(category, subCategory, is_cash = True, region = 'kms', version = '3
             tries += 1
         else:
             raise Exception(f'download failed with status_code{res.status_code} from url')
-
+    
+    if res is not None:
+        return res
 
 def show_image(img):
     img_to_show = Image.fromarray(imgs, 'RGBA')

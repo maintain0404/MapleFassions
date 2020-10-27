@@ -31,7 +31,7 @@ class COLOR_RGB:
     BROWN = [139, 69, 19]
     ORANGE = [255, 140, 0]
     NAVY = [0, 0, 128]
-    VIOLET = [238, 130, 238]A
+    VIOLET = [238, 130, 238]
 
 class COLOR_HUE:
     RED = 0

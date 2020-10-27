@@ -3,9 +3,6 @@ import json
 from collections import OrderedDict, Counter
 from settings import COLOR_CODE, COLOR_HUE
 
-RGB_COLORS = json.load(open('rgb_colors.json', 'r'))
-HSI_COLORS = json.load(open('hsi_colors.json', 'r'))
-
 def rgb_classify(img):
     color_distances = {}
     for name, rgbcode in COLORS.items():

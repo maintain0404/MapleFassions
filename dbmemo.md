@@ -8,12 +8,12 @@
 - HSI: 각 점의 H값 총 Counter, json
 - colordetail: HSI 추출값, 외부 링크 or array
 ```sql
-create table item(
 id serial primary key not null,
+name varchar not null,
 category smallint not null,
 set_included smallint, foreign key (set_included) references set(id) on delete set null on update cascade,
 tags varchar[],
-HSI json);
+HSI json
 ```
 
 ### set
@@ -22,11 +22,10 @@ HSI json);
 - TYPE: 세트분류, smallint
 - DESCRIPTION: 부가설명, varchar, 
 ```sql
-create table set(
 id serial not null primary key,
 name varchar not null,
 type smallint,
-description varchar);
+description varchar
 ```
 
 
