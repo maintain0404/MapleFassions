@@ -24,7 +24,7 @@ def create(querystring, values):
     result = None
     try:
         cur.execute(querystring, values)
-        cur.commit()
+        connection.commit()
     except Exception as err:
         print(err)
         raise err
