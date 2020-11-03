@@ -13,7 +13,8 @@ name varchar not null,
 category smallint not null,
 set_included smallint, foreign key (set_included) references set(id) on delete set null on update cascade,
 tags varchar[],
-HSI json
+HSI jsonb
+description varchar
 ```
 
 ### set

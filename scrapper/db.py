@@ -13,7 +13,7 @@ def read(querystring):
     result = None
     try:
         cur.execute(querystring)
-        result = cur.fetch_all()
+        result = cur.fetchall()
     except Exception as err:
         print(err)
         return
@@ -34,3 +34,5 @@ def write(querystring, values):
 def end():
     cur.close()
     connection.close()
+
+__del__ = end
