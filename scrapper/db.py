@@ -1,10 +1,10 @@
 import psycopg2 as db
-import secrets
+import secret_keys
 
 connection = db.connect(
     database="maplefassions",
     user='maplefassions',
-    password = secrets.db_password,
+    password = secret_keys.db_password,
 )
 
 cur = connection.cursor()
@@ -20,7 +20,7 @@ def read(querystring):
     else:
         return result
 
-def create(querystring, values):
+def write(querystring, values):
     result = None
     try:
         cur.execute(querystring, values)

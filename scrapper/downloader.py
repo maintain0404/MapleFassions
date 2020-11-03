@@ -4,14 +4,13 @@ import numpy as np
 import cv2
 from PIL import Image
 from io import BytesIO
-
-URL_BASE = 'https://maplestory.io/api'
+import settings
 
 def get_images(item_id, max_tries = 3, motion = 'stand1',
-    region = 'kms', version = '338'):
+    region = settings.REGION, version = settings.VERSION):
     tries = 0
     base64_img_parts = []
-    url = f'{URL_BASE}/{region}/{version}/item/{item_id}'
+    url = f'{settings.URL_BASE}/{region}/{version}/item/{item_id}'
     while True:
         res = requests.get(url)
         if res.status_code is 200:
@@ -29,9 +28,14 @@ def get_images(item_id, max_tries = 3, motion = 'stand1',
         img_arrays.append(np.asarray(Image.open(BytesIO(base64.b64decode(img_info['image'])))))
     return img_arrays
 
-def get_stand_img(item_id, max_tries = 3):
-    url = 'https://maplestory.io/api/character/{"itemId":2000,"alpha":0,"region":"KMS","version":"338"},{"itemId":12000,"alpha":0,"region":"KMS","version":"338"},{"itemId":' + str(item_id) + ',"region":"KMS","version":"338"}/stand1/'
-    
+def get_stand_img(item_id, max_tries = 3,
+    region = settings.REGION, version = settings.VERSION):
+    urlbase = f'{settings.URL_BASE}/character/'
+    base = f'{{"itemId":2000,"alpha":0,"region":"{region}","version":"{version}"}},'
+    base2 = f'{{"itemId":12000,"alpha":0,"region":"{region}","version":"{version}"}},'
+    item = f'{{"itemId":{str(item_id)},"region":"{region}","version":"{version}"}}/stand1/'
+    url = urlbase + base + base2 + item
+
     res = None
     tries = 0
     while True:
@@ -61,8 +65,9 @@ def get_name(item_id, max_tries = 3):
     
     return res.json()['name']
 
-def get_list(category, subCategory, is_cash = True, region = 'kms', version = '338', max_tries = 3):
-    url = f'{URL_BASE}/{region}/{version}/item/list'
+def get_list(category, subCategory, is_cash = True, 
+    region = settings.REGION, version = settings.VERSION, max_tries = 3):
+    url = f'{settings.URL_BASE}/{region}/{version}/item/list'
     querystring = {
         'overallCategoryFilter' : 'Equip',
         'categoryFilter' : category,
@@ -85,5 +90,5 @@ def get_list(category, subCategory, is_cash = True, region = 'kms', version = '3
         return res
 
 def show_image(img):
-    img_to_show = Image.fromarray(imgs, 'RGBA')
+    img_to_show = Image.fromarray(img, 'RGBA')
     img_to_show.show()

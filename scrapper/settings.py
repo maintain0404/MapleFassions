@@ -1,4 +1,32 @@
-class COLOR_CODE:
+URL_BASE = 'https://maplestory.io/api'
+VERSION = '339'
+REGION = 'KMS'
+
+class IntTypes:
+    @classmethod
+    def code2type(cls, code_):
+        if isinstance(code_, int):
+            for k, v in cls.__dict__.items():
+                if v is code_:
+                    return k
+            raise ValueError(f'Invalid {cls.__name__} code')
+        else:
+            raise TypeError(f'{cls.__name__} code must be int')
+        
+
+    @classmethod
+    def type2code(cls, type_):
+        if isinstance(type_, str) and '_' in type_:
+            result = cls.__dict__.get(type_.upper())
+            if result:
+                return result
+            else:
+                raise ValueError(f'Invalid {cls.__name__} type')
+        else:
+            raise TypeError(f'{cls.__name__} type must be string')
+        
+
+class COLOR_CODE(IntTypes):
     TRANSPARENT = 0
     RED = 1
     ORANGE = 2
@@ -16,7 +44,7 @@ class COLOR_CODE:
     WHITE = 14
     GRAY = 15
 
-class COLOR_RGB:
+class COLOR_RGB(IntTypes):
     BLACK = [0, 0, 0]
     WHITE = [255, 255, 255]
     GRAY = [128, 128, 128]
@@ -33,7 +61,7 @@ class COLOR_RGB:
     NAVY = [0, 0, 128]
     VIOLET = [238, 130, 238]
 
-class COLOR_HUE:
+class COLOR_HUE(IntTypes):
     RED = 0
     ORANGE = 30
     YELLOW = 60
@@ -47,15 +75,17 @@ class COLOR_HUE:
     MARGENTA = 300
     ROSE = 330
 
-TYPE_HAT = 100
-TYPE_FACE = 101
-TYPE_EYE = 102
-TYPE_EAR = 103
-TYPE_TOP = 104
-TYPE_OVERALL = 105
-TYPE_BOTTOM = 106
-TYPE_SHOES = 107
-TYPE_GLOVE = 108
-TYPE_SHIELD = 109
-TYPE_CAPE = 110
- 
+class ITEM(IntTypes):
+    HAT = 100
+    FACE = 101
+    EYE = 102
+    EAR = 103
+    TOP = 104
+    OVERALL = 105
+    BOTTOM = 106
+    SHOES = 107
+    GLOVE = 108
+    SHIELD = 109
+    CAPE = 110
+    CASHWEAPON = 170
+    
