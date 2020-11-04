@@ -35,3 +35,7 @@ description varchar
 - shape: 형태분류(페도라, 벙거지, 머리핀 등등)
 - stastics
 - user
+
+### 색분류 결과
+select count(id) from (select id, jsonb_object_keys(hsi::jsonb) as v from item) as temp where temp.v::int = 1;
+색분류가 제대로 안된것들이 3646개, 코드 수정해야 함

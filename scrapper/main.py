@@ -1,13 +1,15 @@
 import db
 from classifier import hsi_classify
-from downloader import get_list, get_stand_img, get_name
+from downloader import Downloader
 import psycopg2.errors
 import json
+
+downloader = Downloader()
 
 def add_item(item_id, name, category):
     errors = {}
     try:
-        img = get_stand_img(item_id)
+        img = downloader.get_image(item_id)
         hsi_dict = dict(hsi_classify(img))
         HSI = ', '.join(map(lambda k, v: f'"{int(k)}":{v}', hsi_dict.keys(), hsi_dict.values()))
         db.write(
@@ -25,3 +27,7 @@ def add_item(item_id, name, category):
         print(name)
     finally:
         return errors
+
+def update_items(item_list):
+    errors = {}
+    
