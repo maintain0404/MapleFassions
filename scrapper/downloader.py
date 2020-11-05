@@ -12,6 +12,7 @@ class Downloader:
         self.version = version
         self.max_tries = max_tries
         self.raise_error = raise_error
+        self.region = region
 
     def execute(self, url, querystring = {}):
         result = None
@@ -58,12 +59,12 @@ class Downloader:
             Image.fromarray(img_array, 'RGBA').show()
         return img_array
 
-    def get_name(self, item_id)
+    def get_name(self, item_id):
         url = f'https://maplestory.io/api/KMS/339/item/{item_id}'
         result = self.execute(url)
         return result.json()['name']
 
-    def get_list(category, subCategory, is_cash = True):
+    def get_list(self, category, subCategory, is_cash = True):
         url = f'{settings.URL_BASE}/{self.region}/{self.version}/item/list'
         querystring = {
             'overallCategoryFilter' : 'Equip',

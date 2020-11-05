@@ -37,5 +37,9 @@ description varchar
 - user
 
 ### 색분류 결과
-select count(id) from (select id, jsonb_object_keys(hsi::jsonb) as v from item) as temp where temp.v::int = 1;
-색분류가 제대로 안된것들이 3646개, 코드 수정해야 함
+select id, name, category, hsi from item where id in (select id from (select id, count(v) as cnt from (select id, jsonb_object_keys(hsi::jsonb) as v from item) as temp group by id) as temp2 where cnt=1);
+색분류 안된 것들 총 51개는 stand1 모션이 없거나 투명템
+나중에 따로 태그를 넣어줘야 할 듯
+
+### 짤팁
+jsonb 타입은 json.dumps(사전)으로 넣어주면 됨

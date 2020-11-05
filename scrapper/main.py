@@ -28,6 +28,15 @@ def add_item(item_id, name, category):
     finally:
         return errors
 
-def update_items(item_list):
-    errors = {}
-    
+def get_hue_is_unclassified():
+    result = db.read('''
+        select id 
+        from (
+            select id, count(v) as cnt 
+            from (
+                select id, jsonb_object_keys(hsi::jsonb) as v 
+                from item) as temp
+            group by id) as temp2 
+            where cnt=1
+    ''')
+    return map(lambda x: x[0], result)
