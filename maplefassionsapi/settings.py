@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
-    'djangorestframework'
+    'rest_framework',
+    'tagging.apps.TaggingConfig'
 ]
 
 MIDDLEWARE = [
