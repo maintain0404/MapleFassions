@@ -53,6 +53,7 @@ select id, name, category, hsi from item where id in (select id from (select id,
 jsonb 타입은 json.dumps(사전)으로 넣어주면 됨
 
 최대 컬러 코드(투명 제외 추출) 추출
+```sql
 select temp1.id, temp1.colorcode, temp3.mcount 
     from (
         select id, (jsonb_each(hsi)::text::ttype).* from item
@@ -66,5 +67,5 @@ select temp1.id, temp1.colorcode, temp3.mcount
         where temp2.colorcode != 0 group by id
     ) as temp3 
     on temp1.id = temp3.id and temp1.counts = temp3.mcount 
-order by temp1.id asc
-;
+order by temp1.id asc;
+```
